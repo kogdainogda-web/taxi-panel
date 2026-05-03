@@ -112,26 +112,7 @@ def dashboard():
                            unpaid=unpaid)
 
 
-@app.route('/vehicles', methods=['GET', 'POST'])
-def vehicles():
-    if not session.get('auth'):
-        return redirect('/login')
-
-    if request.method == 'POST':
-        v = Vehicle(
-            payer_name=request.form['payer_name'],
-            model=request.form['model'],
-            plate_number=request.form['plate_number'],
-            tech_end_date=request.form['tech_end_date'],
-            osgo_end_date=request.form['osgo_end_date'],
-            paid_month=current_month()
-        )
-        db.session.add(v)
-        db.session.commit()
-        return redirect('/vehicles')
-
-    data = Vehicle.query.all()
-    return render_template('vehicles.html', vehicles=data, get_status=get_status)
+ sudo delete web service taxi-panel 
 
 
 @app.route('/drivers', methods=['GET', 'POST'])
