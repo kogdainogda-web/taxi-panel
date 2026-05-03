@@ -2,6 +2,17 @@
 {% block content %}
 
 <h2>🚗 Машины</h2>
+<form method="GET">
+    <input name="search" placeholder="🔍 Гос номер или имя">
+    
+    <select name="paid">
+        <option value="">Все</option>
+        <option value="paid">Оплачено</option>
+        <option value="unpaid">Не оплачено</option>
+    </select>
+
+    <button type="submit">Фильтр</button>
+</form>
 
 <form method="POST">
     <input name="payer_name" placeholder="Имя плательщика">
