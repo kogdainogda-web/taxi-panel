@@ -38,20 +38,28 @@
     <td>{{ v.payer_name }}</td>
     <td>{{ v.model }}</td>
     <td>{{ v.plate_number }}</td>
+    
 
-    <td class="{{ get_status(v.tech_end_date) }}">
-        {{ v.tech_end_date }}
-    </td>
+    {% set tech_status = get_status(v.tech_end_date) %}
+<td class="{{ tech_status[0] }}">
+    {{ v.tech_end_date }}<br>
+    <small>{{ tech_status[1] }}</small>
+</td>
 
-    <td class="{{ get_status(v.osgo_end_date) }}">
-        {{ v.osgo_end_date }}
-    </td>
+   {% set osgo_status = get_status(v.osgo_end_date) %}
+<td class="{{ osgo_status[0] }}">
+    {{ v.osgo_end_date }}<br>
+    <small>{{ osgo_status[1] }}</small>
+</td>
 
     <td>
         <a href="/toggle_vehicle/{{ v.id }}">
             {% if v.paid %} ☑ {% else %} ⬜ {% endif %}
         </a>
     </td>
+    <td>
+    <a href="/edit_vehicle/{{ v.id }}">✏️ Редактировать</a>
+</td>
 </tr>
 {% endfor %}
 </table>
