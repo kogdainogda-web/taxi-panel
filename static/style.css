@@ -1,54 +1,186 @@
 body {
-    font-family: Arial;
-    background: #f4f4f4;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    margin: 0;
+    transition: 0.2s ease;
 }
 
+/* NAV */
 nav {
-    background: #222;
-    padding: 10px;
+    background: #1f2937;
+    padding: 12px;
 }
 
 nav a {
     color: white;
     margin-right: 15px;
     text-decoration: none;
+    font-weight: bold;
 }
 
+/* CONTAINER */
 .container {
     padding: 20px;
 }
 
+/* FORM */
+form {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* INPUTS */
+input, select {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+/* BUTTON */
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    background: #1d4ed8;
+    transform: scale(1.03);
+}
+
+/* TABLE */
 table {
     width: 100%;
-    background: white;
-    margin-top: 20px;
     border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-td, th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-form input {
-    margin: 5px;
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
 }
 
 /* STATUS COLORS */
-.green { background: #d4edda; }
-.yellow { background: #fff3cd; }
-.red { background: #f8d7da; }
+.green { background: #dcfce7; }
+.yellow { background: #fef9c3; }
+.red { background: #fee2e2; }
 
-/* DASHBOARD */
-.grid {
+/* SMALL TEXT */
+small {
+    display: block;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/* LINKS */
+a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+/* DASHBOARD GRID */
+.card-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
+    margin-bottom: 20px;
 }
 
+/* CARD */
 .card {
     background: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 12px;
     text-align: center;
+    transition: 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.icon {
+    font-size: 26px;
+}
+
+/* DARK MODE */
+body.dark {
+    background: #0f172a;
+    color: #e5e7eb;
+}
+
+body.dark nav {
+    background: #111827;
+}
+
+body.dark table,
+body.dark form,
+body.dark .card {
+    background: #1f2937;
+    color: #e5e7eb;
+}
+
+body.dark input,
+body.dark select {
+    background: #111827;
+    color: white;
+    border: 1px solid #374151;
+}
+@media (max-width: 768px) {
+
+    /* GRID → 1 колонка */
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* TABLE scroll */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* FORM full width */
+    input, select, button {
+        width: 100%;
+        margin: 6px 0;
+        box-sizing: border-box;
+    }
+
+    form {
+        padding: 10px;
+    }
+
+    /* NAV компактнее */
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+
+    /* CARD spacing */
+    .card {
+        padding: 15px;
+    }
+
+    /* TEXT smaller */
+    h2 {
+        font-size: 18px;
+    }
 }
