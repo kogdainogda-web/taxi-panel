@@ -34,7 +34,6 @@ class Driver(db.Model):
 def current_month():
     return date.today().strftime("%Y-%m")
 
-
 def get_status(end_date_str):
     try:
         end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
@@ -42,20 +41,21 @@ def get_status(end_date_str):
         days_left = (end_date - today).days
 
         if days_left < 0:
-            return "red"
+            return "red", "❌ Просрочено"
         elif days_left <= 14:
-            return "yellow"
+            return "yellow", f"⏳ Осталось {days_left} дн."
         else:
-            return "green"
+            return "green", f"✅ {days_left} дн."
+
     except:
-        return "gray"
+        return "gray", "—"
 
 # ---------------- AUTH ----------------
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if request.form['password'] == "1234":
+        if request.form['password'] == "0091":
             session['auth'] = True
             return redirect('/dashboard')
 
@@ -112,7 +112,62 @@ def dashboard():
                            unpaid=unpaid)
 
 
- sudo delete web service taxi-panel 
+@app.route('/vehicles', methods=['GET', 'POST'])
+def vehicles():
+    if not session.get('auth'):
+        return redirect('/login')
+
+    if request.method == 'POST':
+        v = Vehicle(
+            payer_name=request.form['payer_name'],
+            model=request.form['model'],
+            plate_number=request.form['plate_number'],
+            tech_end_date=request.form['tech_end_date'],
+            osgo_end_date=request.form['osgo_end_date'],
+            paid_month=current_month()
+        )
+        db.session.add(v)
+        db.session.commit()
+        return redirect('/vehicles')
+
+    # --- SEARCH / FILTER ---
+    search = request.args.get('search', '')
+    paid_filter = request.args.get('paid', '')
+
+    query = Vehicle.query
+
+    if search:
+        query = query.filter(
+            (Vehicle.plate_number.contains(search)) |
+            (Vehicle.payer_name.contains(search))
+        )
+
+    if paid_filter == "paid":
+        query = query.filter_by(paid=True)
+    elif paid_filter == "unpaid":
+        query = query.filter_by(paid=False)
+
+    data = query.all()
+
+    return render_template('vehicles.html', vehicles=data, get_status=get_status)
+@app.route('/edit_vehicle/<int:id>', methods=['GET', 'POST'])
+def edit_vehicle(id):
+    if not session.get('auth'):
+        return redirect('/login')
+
+    v = Vehicle.query.get_or_404(id)
+
+    if request.method == 'POST':
+        v.payer_name = request.form['payer_name']
+        v.model = request.form['model']
+        v.plate_number = request.form['plate_number']
+        v.tech_end_date = request.form['tech_end_date']
+        v.osgo_end_date = request.form['osgo_end_date']
+
+        db.session.commit()
+        return redirect('/vehicles')
+
+    return render_template('edit_vehicle.html', v=v)
 
 
 @app.route('/drivers', methods=['GET', 'POST'])
