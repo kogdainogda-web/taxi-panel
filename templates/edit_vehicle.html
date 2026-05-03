@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>✏️ Редактирование машины</h2>
+
+<form method="POST">
+    <input name="payer_name" value="{{ v.payer_name }}" placeholder="Имя плательщика">
+    <input name="model" value="{{ v.model }}" placeholder="Модель">
+    <input name="plate_number" value="{{ v.plate_number }}" placeholder="Гос номер">
+
+    <input type="date" name="tech_end_date" value="{{ v.tech_end_date }}">
+    <input type="date" name="osgo_end_date" value="{{ v.osgo_end_date }}">
+
+    <button type="submit">💾 Сохранить</button>
+</form>
+
+<a href="/vehicles">⬅ Назад</a>
+
+{% endblock %}
