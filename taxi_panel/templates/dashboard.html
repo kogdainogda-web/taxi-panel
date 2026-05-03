@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>📊 Панель управления</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🚗 Всего машин</h3>
+<p>{{ total }}</p>
+</div>
+
+<div class="card">
+<h3>🟡 Скоро истекают</h3>
+<p>{{ expiring }}</p>
+</div>
+
+<div class="card">
+<h3>🔴 Просрочено</h3>
+<p>{{ overdue }}</p>
+</div>
+
+<div class="card">
+<h3>💰 Не оплачено</h3>
+<p>{{ unpaid }}</p>
+</div>
+
+</div>
+
+{% endblock %}
